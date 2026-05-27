@@ -18,6 +18,10 @@ TODAY = _NOW.strftime('%Y%m%d')                                        # 当天
 DATE_RECENT_START = (_NOW - timedelta(days=120)).strftime('%Y%m%d')    # 扫描用：近120天
 DATE_BT_START    = (_NOW - timedelta(days=3*365)).strftime('%Y%m%d')   # 回测用：近3年
 
+# ===== 交易成本（A股实盘费率） =====
+COMMISSION = 0.00025           # 佣金（万2.5，买卖双向）
+STAMP_DUTY = 0.0005            # 印花税（万5，仅卖出，2023.8减半）
+
 # ===== 风险控制参数 =====
 ATR_PERIOD = 14                # ATR 计算周期
 ATR_MULTIPLIER = 2.0           # ATR 追踪止盈倍数

@@ -24,14 +24,17 @@ class BacktestResult:
 class BacktestEngine:
     """回测引擎"""
 
-    def __init__(self, initial_capital: float = 100000, commission: float = 0.0003):
+    def __init__(self, initial_capital: float = 100000, commission: float = 0.00025,
+                 stamp_duty: float = 0.0005):
         """
         Args:
             initial_capital: 初始资金
-            commission: 手续费比例（默认万三）
+            commission: 手续费比例（默认万2.5）
+            stamp_duty: 印花税比例（默认万5，仅卖出，A股2023.8减半后）
         """
         self.initial_capital = initial_capital
         self.commission = commission
+        self.stamp_duty = stamp_duty
 
     def run(self, data: pd.DataFrame, strategy) -> BacktestResult:
         """
@@ -60,7 +63,7 @@ class BacktestEngine:
             price = row['close']
 
             if signal == Signal.BUY.value and shares == 0:
-                # 买入（收盘价成交）
+                # 买入（收盘价成交，A股买入仅佣金无印花税）
                 shares = cash / price * (1 - self.commission)
                 cash = 0
                 trades.append({
@@ -71,9 +74,9 @@ class BacktestEngine:
                 })
 
             if signal == Signal.SELL_HALF.value and shares > 0:
-                # 卖出半仓
+                # 卖出半仓（佣金+印花税）
                 sell_shares = shares / 2
-                cash += sell_shares * price * (1 - self.commission)
+                cash += sell_shares * price * (1 - self.commission - self.stamp_duty)
                 shares = sell_shares
                 trades.append({
                     'date': str(date.date()),
@@ -83,8 +86,8 @@ class BacktestEngine:
                 })
 
             if signal == Signal.SELL.value and shares > 0:
-                # 卖出
-                cash += shares * price * (1 - self.commission)
+                # 卖出（佣金+印花税）
+                cash += shares * price * (1 - self.commission - self.stamp_duty)
                 trades.append({
                     'date': str(date.date()),
                     'type': 'SELL',

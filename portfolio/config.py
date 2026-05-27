@@ -17,9 +17,9 @@ class PortfolioConfig:
     sector_exposure_limit: float = 0.40      # 单板块上线
     sizing_method: str = 'equal'             # equal | signal_weighted | volatility_parity
 
-    # 交易成本
-    commission: float = 0.0003               # 手续费
-    stamp_duty: float = 0.001                # 印花税（卖出）
+    # 交易成本 (A股实盘费率)
+    commission: float = 0.00025              # 手续费（万2.5）
+    stamp_duty: float = 0.0005               # 印花税（万5，仅卖出，2023.8减半）
 
     # 风控
     portfolio_stop_loss: float = -0.25       # 组合止损（总亏损，安全网）
