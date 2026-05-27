@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# 运行时缓存 (体积大)
+data/fundamental_cache/
+*.pkl
+
+# 回测结果
+results/
+screener/results/
+
+# 交易记忆 + 成本日志 (含个人盈亏数据)
+memory/ticker_memories/
+memory/MEMORY_INDEX.md
+analytics/results/
+
+# 个人持仓 (含实际股数和成本价，从 stocks.example.py 复制)
+stocks.py
+
+# IDE
+.vscode/
+.idea/
+
+# 环境变量
+.env
+.env.local
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
