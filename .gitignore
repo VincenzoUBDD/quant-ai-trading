@@ -18,9 +18,6 @@ memory/ticker_memories/
 memory/MEMORY_INDEX.md
 analytics/results/
 
-# 个人持仓 (含实际股数和成本价，从 stocks.example.py 复制)
-stocks.py
-
 # IDE
 .vscode/
 .idea/
